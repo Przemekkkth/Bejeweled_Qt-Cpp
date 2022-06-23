@@ -5,11 +5,36 @@
 
 GameScene::GameScene(QObject *parent)
     : QGraphicsScene{parent}, m_game(), m_click(0), m_isSwap(false), m_isMoving(false), m_tmpScore(0)
+    , m_deltaTime(0.f), m_animationTime(0.f), m_animationSpeed(32.f)
 {
     loadPixmap();
     setSceneRect(0, 0, Game::RESOLUTION.width(), Game::RESOLUTION.height());
     init();
     draw();
+    connect(&m_timer, &QTimer::timeout, this, &GameScene::loop);
+    m_timer.start(Game::ITERATION_VALUE);
+    m_elapsedTimer.start();
+}
+
+void GameScene::loop()
+{
+    m_deltaTime = m_elapsedTimer.elapsed();
+    m_elapsedTimer.restart();
+
+    m_animationTime += m_deltaTime;
+
+    if (m_animationTime > m_animationSpeed)
+    {
+        m_animationTime -= m_animationSpeed;
+        mouseClick();
+        matchFinding();
+        movingAnimation();
+        removeAnimation();
+        updateScore();
+        swapBackIfNotMatch();
+        updateGrid();
+        draw();
+    }
 }
 
 void GameScene::loadPixmap()
@@ -257,14 +282,5 @@ void GameScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
             m_click++;
         }
         m_pos = QPoint(event->scenePos().x(), event->scenePos().y()) - Game::OFFSET;
-        mouseClick();
-        matchFinding();
-        movingAnimation();
-        removeAnimation();
-        updateScore();
-        swapBackIfNotMatch();
-        updateGrid();
-        //removePixmapItems();
-        draw();
     }
 }

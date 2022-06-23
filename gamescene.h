@@ -3,6 +3,9 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+#include <QTimer>
+#include <QElapsedTimer>
+
 #include "game.h"
 class GameScene : public QGraphicsScene
 {
@@ -11,7 +14,8 @@ public:
     explicit GameScene(QObject *parent = nullptr);
 
 signals:
-
+private slots:
+    void loop();
 private:
     void loadPixmap();
     void init();
@@ -35,6 +39,11 @@ private:
     QGraphicsPixmapItem m_pixmapItems[10][10];
     int m_tmpScore;
     // QGraphicsScene interface
+    QElapsedTimer m_elapsedTimer;
+    QTimer m_timer;
+    float m_deltaTime;
+    float m_animationTime;
+    const float m_animationSpeed;
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 };

@@ -5,6 +5,7 @@ const QPoint Game::OFFSET = QPoint(48,24);
 const int Game::TILE_SIZE = 54;
 const QString Game::PATH_TO_BG_PIXMAP = ":/images/background.png";
 const QString Game::PATH_TO_GEMS_PIXMAP = ":/images/gems.png";
+const float Game::ITERATION_VALUE = 1000.0f/60.0f;
 
 Game::Game()
 {
@@ -34,6 +35,4 @@ void Game::initGrid()
              m_grid[i][j].y = i * TILE_SIZE;
          }
     }
-
-
 }
