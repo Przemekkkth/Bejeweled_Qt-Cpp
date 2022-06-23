@@ -3,5 +3,6 @@
         <file>images/cursor.png</file>
         <file>images/gems.png</file>
         <file>images/background.png</file>
+        <file>images/frame.png</file>
     </qresource>
 </RCC>

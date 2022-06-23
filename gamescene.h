@@ -31,6 +31,7 @@ private:
     Game m_game;
     QPixmap m_BgPixmap;
     QPixmap m_GemsPixmap;
+    QPixmap m_framePixmap;
 
     int m_x0, m_y0, m_x, m_y;
     int m_click;

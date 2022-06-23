@@ -56,13 +56,26 @@ void GameScene::loadPixmap()
     {
         qDebug() << "GemsPixmap is not loaded successfully";
     }
+
+    if(m_framePixmap.load(Game::PATH_TO_FRAME_PIXMAP))
+    {
+        qDebug() << "FramePixmap is loaded successfully";
+    }
+    else
+    {
+        qDebug() << "FramePixmap is not loaded successfully";
+    }
 }
 
 void GameScene::init()
 {
     clear();
-    QGraphicsPixmapItem *bgItem = new QGraphicsPixmapItem(m_BgPixmap.scaled(Game::RESOLUTION.width(), Game::RESOLUTION.height()));
-    addItem(bgItem);
+//    QGraphicsPixmapItem *bgItem = new QGraphicsPixmapItem(m_BgPixmap.scaled(Game::RESOLUTION.width(), Game::RESOLUTION.height()));
+//    addItem(bgItem);
+    QGraphicsPixmapItem *frameItem = new QGraphicsPixmapItem(m_framePixmap);
+    frameItem->setPos(Game::OFFSET.x() - 2, Game::OFFSET.y() - 1);
+    addItem(frameItem);
+
     for(int i = 0; i < 10; ++i)
     {
         for(int j = 0; j < 10; ++j)

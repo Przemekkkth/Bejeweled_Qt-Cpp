@@ -25,6 +25,7 @@ public:
     static const int TILE_SIZE;
     static const QString PATH_TO_BG_PIXMAP;
     static const QString PATH_TO_GEMS_PIXMAP;
+    static const QString PATH_TO_FRAME_PIXMAP;
     static const float ITERATION_VALUE;
     Piece m_grid[10][10];
 };
