@@ -5,7 +5,7 @@
 
 GameScene::GameScene(QObject *parent)
     : QGraphicsScene{parent}, m_game(), m_click(0), m_isSwap(false), m_isMoving(false), m_tmpScore(0)
-    , m_deltaTime(0.f), m_animationTime(0.f), m_animationSpeed(32.f)
+    , m_deltaTime(0.f), m_animationTime(0.f), m_animationSpeed(20.f)
 {
     loadPixmap();
     setSceneRect(0, 0, Game::RESOLUTION.width(), Game::RESOLUTION.height());
