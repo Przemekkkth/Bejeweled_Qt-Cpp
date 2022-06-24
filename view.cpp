@@ -7,6 +7,7 @@ View::View()
 {
     setScene(m_gameScene);
     resize(m_gameScene->sceneRect().width() + 2, m_gameScene->sceneRect().height() + 2);
+    setCursor(QCursor(QPixmap(":/images/cursor.png")));
 }
 
 void View::keyPressEvent(QKeyEvent *event)

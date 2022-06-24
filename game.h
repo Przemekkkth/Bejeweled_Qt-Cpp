@@ -27,6 +27,7 @@ public:
     static const QString PATH_TO_GEMS_PIXMAP;
     static const QString PATH_TO_FRAME_PIXMAP;
     static const QString PATH_TO_SCORE_PIXMAP;
+    static const QString PATH_TO_CURSOR_PIXMAP;
     static const float ITERATION_VALUE;
     Piece m_grid[10][10];
 };
