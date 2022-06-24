@@ -9,9 +9,10 @@ const float Game::ITERATION_VALUE = 1000.0f/60.0f;
 const QString Game::PATH_TO_FRAME_PIXMAP = ":/images/frame.png";
 const QString Game::PATH_TO_SCORE_PIXMAP = ":/images/score.png";
 const QString Game::PATH_TO_CURSOR_PIXMAP = ":/images/cursor.png";
-
+const QString Game::PATH_TO_NUMBERS_PIXMAP = ":/images/numbers.png";
 
 Game::Game()
+    : m_score(0)
 {
     initGrid();
 }

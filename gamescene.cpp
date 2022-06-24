@@ -35,6 +35,7 @@ void GameScene::loop()
         swapBackIfNotMatch();
         updateGrid();
         draw();
+        drawScore();
     }
 }
 
@@ -75,6 +76,15 @@ void GameScene::loadPixmap()
     {
         qDebug() << "ScorePixmap is not loaded successfully";
     }
+
+    if(m_numbersPixmap.load(Game::PATH_TO_NUMBERS_PIXMAP))
+    {
+        qDebug() << "NumbersPixmap is loaded successfully";
+    }
+    else
+    {
+        qDebug() << "NumbersPixmap is not loaded successfully";
+    }
 }
 
 void GameScene::init()
@@ -84,7 +94,7 @@ void GameScene::init()
     addItem(bgItem);
 
     QGraphicsPixmapItem *frameItem = new QGraphicsPixmapItem(m_framePixmap);
-    frameItem->setPos(Game::OFFSET.x() - 2, Game::OFFSET.y() - 1);
+    frameItem->setPos(Game::OFFSET.x() - 2, Game::OFFSET.y());
     addItem(frameItem);
 
     for(int i = 0; i < 10; ++i)
@@ -96,8 +106,17 @@ void GameScene::init()
     }
 
     QGraphicsPixmapItem *scoreItem = new QGraphicsPixmapItem(m_scorePixmap);
-    scoreItem->setPos(Game::RESOLUTION.width() - scoreItem->boundingRect().width() - 50, 80);
+    scoreItem->setPos(Game::RESOLUTION.width() - scoreItem->boundingRect().width() - 85, 100);
     addItem(scoreItem);
+
+    unityPartScoreItem.moveBy(Game::RESOLUTION.width()-32, 100);
+    addItem(&unityPartScoreItem);
+
+    decimalPartScoreItem.moveBy(Game::RESOLUTION.width()-2*32, 100);
+    addItem(&decimalPartScoreItem);
+
+    hundredthPartScoreItem.moveBy(Game::RESOLUTION.width()-3*32, 100);
+    addItem(&hundredthPartScoreItem);
 }
 
 void GameScene::draw()
@@ -109,20 +128,20 @@ void GameScene::draw()
             Piece p = m_game.m_grid[i][j];
             QImage image = m_GemsPixmap.copy(p.kind*49, 0, 49, 49).toImage().convertToFormat(QImage::Format_ARGB32);
 
-//            for (int x(0); x != image.width(); ++x)
-//            {
-//              for (int y(0); y != image.height(); ++y)
-//              {
-//                QColor color(image.pixel(x,y));
-//                //qDebug() << color.redF() << " " << color.greenF() << " " << color.blueF() << " " << color.alphaF();
-////                if(color.red() == 0 && color.green() == 0 && color.blue() == 0)
-////                {
-////                    continue;
-////                }
-//                color.setAlpha(p.alpha);
-//                image.setPixel(x, y, color.rgba());
-//              }
-//            }
+            //            for (int x(0); x != image.width(); ++x)
+            //            {
+            //              for (int y(0); y != image.height(); ++y)
+            //              {
+            //                QColor color(image.pixel(x,y));
+            //                //qDebug() << color.redF() << " " << color.greenF() << " " << color.blueF() << " " << color.alphaF();
+            ////                if(color.red() == 0 && color.green() == 0 && color.blue() == 0)
+            ////                {
+            ////                    continue;
+            ////                }
+            //                color.setAlpha(p.alpha);
+            //                image.setPixel(x, y, color.rgba());
+            //              }
+            //            }
 
             m_pixmapItems[i][j].setPixmap(QPixmap::fromImage(image));
             m_pixmapItems[i][j].setPos(p.x, p.y);
@@ -252,6 +271,7 @@ void GameScene::updateScore()
             m_tmpScore += m_game.m_grid[i][j].match;
         }
     }
+
 }
 
 void GameScene::swapBackIfNotMatch()
@@ -264,6 +284,7 @@ void GameScene::swapBackIfNotMatch()
         }
         m_isSwap = false;
     }
+
 }
 
 void GameScene::updateGrid()
@@ -281,6 +302,9 @@ void GameScene::updateGrid()
                         if (!m_game.m_grid[n][j].match)
                         {
                             m_game.swap(m_game.m_grid[n][j], m_game.m_grid[i][j]);
+
+                            m_game.m_score++;
+
                             break;
                         }
                     }
@@ -315,6 +339,40 @@ void GameScene::removePixmapItems()
             removeItem(&m_pixmapItems[i][j]);
         }
     }
+}
+
+void GameScene::drawScore()
+{
+    QString scoreText = QString::number(m_game.m_score);
+    qDebug() << "Score " << scoreText;
+    int unityPartVal = 0;
+    int decimalPartValue = 0;
+    int hendredthPartValue = 0;
+
+    if(scoreText.length() == 1) // 0 - 9
+    {
+        unityPartVal = scoreText.toInt();
+        decimalPartValue = 0;
+        hendredthPartValue = 0;
+    }
+    else if(scoreText.length() == 2) // 10 - 99
+    {
+        unityPartVal = scoreText.last(1).toInt();
+        decimalPartValue = scoreText.first(1).toInt();
+        hendredthPartValue = 0;
+    }
+    else if(scoreText.length() == 3) // 100 - 999
+    {
+        unityPartVal = scoreText.last(1).toInt();
+        hendredthPartValue = scoreText.first(1).toInt();
+        QString copyVal = scoreText;
+        copyVal.chop(1);
+        decimalPartValue = copyVal.last(1).toInt();
+    }
+
+    unityPartScoreItem.setPixmap(m_numbersPixmap.copy(unityPartVal*32, 0, 32, 32));
+    decimalPartScoreItem.setPixmap(m_numbersPixmap.copy(decimalPartValue*32, 0, 32, 32));
+    hundredthPartScoreItem.setPixmap(m_numbersPixmap.copy(hendredthPartValue*32, 0, 32, 32));
 }
 
 void GameScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
