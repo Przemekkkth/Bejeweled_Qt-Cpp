@@ -66,13 +66,23 @@ void GameScene::loadPixmap()
     {
         qDebug() << "FramePixmap is not loaded successfully";
     }
+
+    if(m_scorePixmap.load(Game::PATH_TO_SCORE_PIXMAP))
+    {
+        qDebug() << "ScorePixmap is loaded successfully";
+    }
+    else
+    {
+        qDebug() << "ScorePixmap is not loaded successfully";
+    }
 }
 
 void GameScene::init()
 {
     clear();
-//    QGraphicsPixmapItem *bgItem = new QGraphicsPixmapItem(m_BgPixmap.scaled(Game::RESOLUTION.width(), Game::RESOLUTION.height()));
-//    addItem(bgItem);
+    QGraphicsPixmapItem *bgItem = new QGraphicsPixmapItem(m_BgPixmap.scaled(Game::RESOLUTION.width(), Game::RESOLUTION.height()));
+    addItem(bgItem);
+
     QGraphicsPixmapItem *frameItem = new QGraphicsPixmapItem(m_framePixmap);
     frameItem->setPos(Game::OFFSET.x() - 2, Game::OFFSET.y() - 1);
     addItem(frameItem);
@@ -85,6 +95,9 @@ void GameScene::init()
         }
     }
 
+    QGraphicsPixmapItem *scoreItem = new QGraphicsPixmapItem(m_scorePixmap);
+    scoreItem->setPos(Game::RESOLUTION.width() - scoreItem->boundingRect().width() - 50, 80);
+    addItem(scoreItem);
 }
 
 void GameScene::draw()

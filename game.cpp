@@ -7,6 +7,7 @@ const QString Game::PATH_TO_BG_PIXMAP = ":/images/background.png";
 const QString Game::PATH_TO_GEMS_PIXMAP = ":/images/gems.png";
 const float Game::ITERATION_VALUE = 1000.0f/60.0f;
 const QString Game::PATH_TO_FRAME_PIXMAP = ":/images/frame.png";
+const QString Game::PATH_TO_SCORE_PIXMAP = ":/images/score.png";
 
 Game::Game()
 {
