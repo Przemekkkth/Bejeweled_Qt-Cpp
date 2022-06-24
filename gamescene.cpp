@@ -9,6 +9,7 @@ GameScene::GameScene(QObject *parent)
 {
     loadPixmap();
     setSceneRect(0, 0, Game::RESOLUTION.width(), Game::RESOLUTION.height());
+    setBackgroundBrush(QBrush(QColor(153, 255, 51)));
     init();
     draw();
     connect(&m_timer, &QTimer::timeout, this, &GameScene::loop);
@@ -93,7 +94,24 @@ void GameScene::draw()
         for (int j=1;j<=8;j++)
         {
             Piece p = m_game.m_grid[i][j];
-            m_pixmapItems[i][j].setPixmap(m_GemsPixmap.copy(p.kind*49, 0, 49, 49));
+            QImage image = m_GemsPixmap.copy(p.kind*49, 0, 49, 49).toImage().convertToFormat(QImage::Format_ARGB32);
+
+//            for (int x(0); x != image.width(); ++x)
+//            {
+//              for (int y(0); y != image.height(); ++y)
+//              {
+//                QColor color(image.pixel(x,y));
+//                //qDebug() << color.redF() << " " << color.greenF() << " " << color.blueF() << " " << color.alphaF();
+////                if(color.red() == 0 && color.green() == 0 && color.blue() == 0)
+////                {
+////                    continue;
+////                }
+//                color.setAlpha(p.alpha);
+//                image.setPixel(x, y, color.rgba());
+//              }
+//            }
+
+            m_pixmapItems[i][j].setPixmap(QPixmap::fromImage(image));
             m_pixmapItems[i][j].setPos(p.x, p.y);
             m_pixmapItems[i][j].moveBy(Game::OFFSET.x() - Game::TILE_SIZE, Game::OFFSET.y() - Game::TILE_SIZE);
 
