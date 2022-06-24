@@ -127,22 +127,15 @@ void GameScene::draw()
         {
             Piece p = m_game.m_grid[i][j];
             QImage image = m_GemsPixmap.copy(p.kind*49, 0, 49, 49).toImage().convertToFormat(QImage::Format_ARGB32);
-
-            //            for (int x(0); x != image.width(); ++x)
-            //            {
-            //              for (int y(0); y != image.height(); ++y)
-            //              {
-            //                QColor color(image.pixel(x,y));
-            //                //qDebug() << color.redF() << " " << color.greenF() << " " << color.blueF() << " " << color.alphaF();
-            ////                if(color.red() == 0 && color.green() == 0 && color.blue() == 0)
-            ////                {
-            ////                    continue;
-            ////                }
-            //                color.setAlpha(p.alpha);
-            //                image.setPixel(x, y, color.rgba());
-            //              }
-            //            }
-
+//            for (int x(0); x != image.width(); ++x)
+//            {
+//                for (int y(0); y != image.height(); ++y)
+//                {
+//                    QColor color(image.pixel(x,y));
+//                    color.setAlpha(p.alpha);
+//                    image.setPixel(x, y, color.rgba());
+//                }
+//            }
             m_pixmapItems[i][j].setPixmap(QPixmap::fromImage(image));
             m_pixmapItems[i][j].setPos(p.x, p.y);
             m_pixmapItems[i][j].moveBy(Game::OFFSET.x() - Game::TILE_SIZE, Game::OFFSET.y() - Game::TILE_SIZE);
