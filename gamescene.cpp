@@ -344,7 +344,6 @@ void GameScene::removePixmapItems()
 void GameScene::drawScore()
 {
     QString scoreText = QString::number(m_game.m_score);
-    qDebug() << "Score " << scoreText;
     int unityPartVal = 0;
     int decimalPartValue = 0;
     int hendredthPartValue = 0;
