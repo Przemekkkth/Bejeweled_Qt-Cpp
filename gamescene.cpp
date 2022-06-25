@@ -2,6 +2,10 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsPixmapItem>
+#include <QKeyEvent>
+#include <QPainter>
+#include <QDir>
+#include <QDebug>
 
 GameScene::GameScene(QObject *parent)
     : QGraphicsScene{parent}, m_game(), m_click(0), m_isSwap(false), m_isMoving(false), m_tmpScore(0)
@@ -367,6 +371,19 @@ void GameScene::drawScore()
     hundredthPartScoreItem.setPixmap(m_numbersPixmap.copy(hendredthPartValue*32, 0, 32, 32));
 }
 
+void GameScene::renderScene()
+{
+    static int index = 0;
+    QString fileName = QDir::currentPath() + QDir::separator() + "screen" + QString::number(index++) + ".png";
+    QRect rect = sceneRect().toAlignedRect();
+    QImage image(rect.size(), QImage::Format_ARGB32);
+    image.fill(Qt::transparent);
+    QPainter painter(&image);
+    render(&painter);
+    image.save(fileName);
+    qDebug() << "saved " << fileName;
+}
+
 void GameScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton)
@@ -377,4 +394,17 @@ void GameScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
         }
         m_pos = QPoint(event->scenePos().x(), event->scenePos().y()) - Game::OFFSET;
     }
+}
+
+void GameScene::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key()) {
+        case Qt::Key_Z:
+    {
+        //renderScene();
+    }
+        break;
+    }
+
+    QGraphicsScene::keyPressEvent(event);
 }

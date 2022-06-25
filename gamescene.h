@@ -29,6 +29,7 @@ private:
     void updateGrid();
     void removePixmapItems();
     void drawScore();
+    void renderScene();
     Game m_game;
     QPixmap m_BgPixmap;
     QPixmap m_GemsPixmap;
@@ -51,6 +52,7 @@ private:
     const float m_animationSpeed;
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    virtual void keyPressEvent(QKeyEvent *event) override;
 };
 
 #endif // GAMESCENE_H
