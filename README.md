@@ -17,4 +17,6 @@ Compile
 qmake && make
 ```
 ## Addons
-* [Qt] (https://www.qt.io/) - Cross-Platform software for embedded & desktop
+* [Qt](https://www.qt.io/) - Cross-Platform software for embedded & desktop
+* [yt](https://youtu.be/0YnF8vVZt1E) - gameplay
+* [Play online](https://przemekkkth.github.io/bejeweled/index.html) - game hosted on GitHub
